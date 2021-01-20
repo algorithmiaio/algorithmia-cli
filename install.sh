@@ -11,10 +11,8 @@ migrate_config() {
     fi
 }
 
-pyv=$(python -V 2>&1 | grep -Po '(?<=Python )(.+)')
-if [[ -n "$pyv" ]]; then
-    pipv=$(pip --version | grep -Po '(?<=pip )(.+)')
-    if [[ -n "$pipv" ]]; then
+if  python --version "$1" > /dev/null 2>&1; then
+    if  pip --version "$1" > /dev/null 2>&1; then
         pip3 -q install algorithmia || pip -q install algorithmia || pip install algorithmia
         migrate_config
     else
